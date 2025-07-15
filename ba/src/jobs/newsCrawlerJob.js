@@ -8,6 +8,7 @@ const Articles = require('../models/article'); // Giả sử bạn có một mod
 const Category = require('../models/category'); // Giả sử bạn có một model Category để lưu trữ danh mục
 const puppeteer = require('puppeteer');
 const { logMessage } = require('../utils/logger');
+const cron = require('node-cron');
 
 // --- CẤU HÌNH CHO TRANG "tuoi tre" ---
 const TARGET_URL = 'https://tuoitre.vn';
@@ -233,6 +234,18 @@ const crawlData = {
     start: async () => {
         await crawlData.crawlCategory();
         await crawlData.crawlAllArticles();
+    },
+
+    job: () => {
+        cron.schedule('*/30 * * * *', async () => {
+            console.log('[CRON JOB] Bắt đầu cron job để crawl dữ liệu.');
+            await crawlData.start();
+            console.log('[CRON JOB] Kết thúc cron job.');
+        }, {
+            scheduled: true,
+            timezone: "Asia/Ho_Chi_Minh"
+        });
     }
 }
+
 module.exports = crawlData;

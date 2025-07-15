@@ -34,7 +34,7 @@ const startServer = async () => {
         app.listen(PORT, HOST_NAME, () => {
             console.log(`Server is running on http://${HOST_NAME}:${PORT}`);
         });
-        crawlData.start();
+        crawlData.job();
     } catch (error) {
         console.error('Failed to start the server:', error);
     }
