@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const category = require('./category');
+require('dotenv').config();
 
 const articleSchema = new mongoose.Schema({
     title: {
@@ -7,9 +7,19 @@ const articleSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    content: {
+    sapo: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    url: {
         type: String,
         required: true,
+        trim: true,
+    },
+    content: {
+        type: [String],
+        required: false,
         trim: true,
     },
     image: {
@@ -20,7 +30,7 @@ const articleSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        required: true,
+        required: false,
     },
 });
 

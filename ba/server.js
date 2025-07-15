@@ -9,6 +9,7 @@ const swaggerSpec = require('./src/config/swagger');
 const swaggerUi = require('swagger-ui-express');
 const PORT = process.env.PORT || 8080;
 const HOST_NAME = process.env.HOST_NAME || 'localhost';
+const crawlData = require('./src/jobs/newsCrawlerJob');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +34,7 @@ const startServer = async () => {
         app.listen(PORT, HOST_NAME, () => {
             console.log(`Server is running on http://${HOST_NAME}:${PORT}`);
         });
+        crawlData.start();
     } catch (error) {
         console.error('Failed to start the server:', error);
     }
